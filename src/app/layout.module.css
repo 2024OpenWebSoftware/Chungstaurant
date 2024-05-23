@@ -1,0 +1,60 @@
+.navBarWrapper {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.navBar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin-left: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.searchForm {
+    position: relative;
+}
+
+.searchIcon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    fill: #33363f;
+}
+
+.searchInput {
+    width: 360px;
+    height: 18px;
+    border-radius: 18px;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
+    padding: 8px 32px 8px 8px;
+}
+
+.hamburgerButton {
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.hamburgerButton:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
