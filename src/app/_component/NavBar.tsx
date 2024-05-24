@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "@/app/layout.module.css";
 import Logo from "../../../public/충스토랑.png";
-import HamburgerMenu from './HamburgerMenu';
-import { useModalStore } from '@/store/modal';
+import HamburgerMenu from "./HamburgerMenu";
+import { useModalStore } from "@/store/modal";
 
 export default function NavBar() {
     const modalStore = useModalStore();
@@ -17,7 +17,7 @@ export default function NavBar() {
         <>
             <header className={styles.navBarWrapper}>
                 <section className={styles.navBar}>
-                    <Link href="#" className={styles.logo}>
+                    <Link href="/" className={styles.logo}>
                         <Image src={Logo} alt="충스토랑" width={120} />
                     </Link>
                     <div className={styles.searchForm}>

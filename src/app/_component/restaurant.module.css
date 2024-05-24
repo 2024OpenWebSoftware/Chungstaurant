@@ -1,0 +1,59 @@
+.infoWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.foodImage {
+    position: relative;
+    width: 270px;
+    height: 180px;
+    background-image: url("https://d12zq4w4guyljn.cloudfront.net/750_750_20230912104151281_photo_d9db485df002.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    margin-bottom: 18px;
+}
+
+.tags {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    display: flex;
+}
+
+.tag {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    padding: 2px 8px;
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.restaurantName {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+.starRatings {
+    position: relative;
+    width: max-content;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1.3px;
+    -webkit-text-stroke-color: #2b2a29;
+    font-size: 18px;
+}
+
+.fillStars {
+    z-index: 1;
+    position: absolute;
+    color: #ffc700;
+    -webkit-text-fill-color: gold;
+    overflow: hidden;
+}
+
+.baseStars {
+    z-index: 0;
+}
