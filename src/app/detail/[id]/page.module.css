@@ -40,27 +40,6 @@
     background-color: #d7d7d7;
 }
 
-.starRatings {
-    position: relative;
-    width: max-content;
-    -webkit-text-fill-color: transparent;
-    font-size: 32px;
-    margin-right: 18px;
-}
-
-.fillStars {
-    z-index: 1;
-    position: absolute;
-    color: #ffc700;
-    -webkit-text-fill-color: gold;
-    overflow: hidden;
-}
-
-.baseStars {
-    z-index: 0;
-    -webkit-text-fill-color: gray;
-}
-
 .ratingsInfo {
     display: flex;
     align-items: center;
@@ -112,7 +91,7 @@
     color: gray;
 }
 
-.reviewWrapper {
+.reviewInputWrapper {
     position: relative;
 }
 

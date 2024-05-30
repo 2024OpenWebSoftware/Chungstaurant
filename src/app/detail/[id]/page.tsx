@@ -2,6 +2,8 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import KakaoMap from "@/app/_component/KakaoMap";
 import AiFillStar from "./_component/AiFillStar";
+import Review from './_component/Review';
+import StarRating from '@/app/_component/StarRating';
 
 export default function DetailPage() {
     return (
@@ -38,26 +40,8 @@ export default function DetailPage() {
                         <button className={styles.foodType}>#중문</button>
                     </div>
                     <div className={styles.ratingsInfo}>
-                        <div className={styles.starRatings}>
-                            <div
-                                className={styles.fillStars}
-                                style={{ width: "80%" }}
-                            >
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                            </div>
-                            <div className={styles.baseStars}>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                            </div>
-                        </div>
-                        4/5 (7명의 평가)
+                        <StarRating size="36px" />
+                        <span style={{marginLeft: "12px"}}>4/5 (7명의 평가)</span>
                     </div>
                     <div className={styles.locInfo}>
                         <svg
@@ -160,7 +144,7 @@ export default function DetailPage() {
                 <AiFillStar />
                 <AiFillStar />
             </div>
-            <div className={styles.reviewWrapper}>
+            <div className={styles.reviewInputWrapper}>
                 <textarea
                     className={styles.reviewTextArea}
                     rows={5}
@@ -195,6 +179,7 @@ export default function DetailPage() {
                     <button className={styles.uploadButton}>등록하기</button>
                 </div>
             </div>
+            <Review />
         </main>
     );
 }

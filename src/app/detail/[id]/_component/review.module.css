@@ -1,0 +1,30 @@
+.reviewWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    border: 1px solid #999999;
+    padding: 18px;
+    margin: 12px 0;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.userInfo img {
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 18px;
+}
+
+.review {
+    margin-bottom: 12px;
+}
+
+.imageSection img {
+    object-fit: cover;
+}

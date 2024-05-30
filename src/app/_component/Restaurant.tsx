@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import styles from "./restaurant.module.css";
+import StarRating from './StarRating';
 
 export default function Restaurant() {
     const router = useRouter();
@@ -23,14 +24,7 @@ export default function Restaurant() {
                 </div>
             </div>
             <div className={styles.restaurantName}>쿠쉬</div>
-            <div className={styles.starRatings}>
-                <div className={styles.fillStars} style={{width: "80%"}}>
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <div className={styles.baseStars}>
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-            </div>
+            <StarRating size="18px" />
         </div>
     );
 }

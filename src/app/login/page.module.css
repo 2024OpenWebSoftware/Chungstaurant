@@ -1,0 +1,49 @@
+.loginWrapper {
+    position: relative;
+    width: 500px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 36px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 180px;
+}
+
+.input {
+    width: 250px;
+    margin-bottom: 8px;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #999999;
+}
+
+.buttons {
+    width: 100%;
+    position: absolute;
+    bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginButton {
+    width: 400px;
+    background-color: #5a6bff;
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 18px;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.loginButton:hover {
+    background-color: #5564ec;
+}
+
+.navButton {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
