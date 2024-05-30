@@ -1,14 +1,14 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ChungstaurantFirestore } from "@/firebase";
 
-export default async function getRestaurants(searchParam?: string) {
+export default async function getRestaurants(tagParam?: string) {
   try {
     const restaurantCollectionRef = collection(ChungstaurantFirestore, 'RestaurantData');
 
     let restaurantQuery;
 
-    if (searchParam) {
-      restaurantQuery = query(restaurantCollectionRef, where('tagList', 'array-contains', searchParam));
+    if (tagParam) {
+      restaurantQuery = query(restaurantCollectionRef, where('tagList', 'array-contains', tagParam));
     } else {
       restaurantQuery = restaurantCollectionRef;
     }
