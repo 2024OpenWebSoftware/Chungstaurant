@@ -28,8 +28,21 @@
     background-color: #d7d7d7;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .restaurantWrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 40px;
+    animation: fadeIn 0.5s ease-in-out;
 }
