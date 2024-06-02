@@ -5,7 +5,6 @@ npm install next
 npm install @tanstack/react-query
 npm install zustand
 npm install --save firebase
-npm install next-auth@latest
 npm install --save react react-dom
 npm install classnames
 npm i react-kakao-maps-sdk

@@ -46,3 +46,25 @@
     gap: 40px;
     animation: fadeIn 0.5s ease-in-out;
 }
+
+.title {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 72px;
+    align-items: center;
+}
+
+.mapButton {
+    height: max-content;
+    margin-left: 12px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    background-color: #5a6bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.mapButton:hover {
+    background-color: #5260e6;
+}
