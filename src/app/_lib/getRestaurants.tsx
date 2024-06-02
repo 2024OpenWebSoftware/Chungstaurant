@@ -16,7 +16,7 @@ export default async function getRestaurants(tagParam?: string) {
     const restaurantListSnap = await getDocs(restaurantQuery); // 쿼리를 실행하여 결과를 가져옵니다.
     const data = restaurantListSnap.docs.map(doc => ({
       ...doc.data(),
-      id: doc.id
+      id: doc.id // <-여기의 id는 꼭 getRestaurntData(), createReviewListData(), getReviewListData()에 넘겨주어야함
     }));
 
     return data;

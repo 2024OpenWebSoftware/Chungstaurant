@@ -1,23 +1,24 @@
 /* 
 1. 해당 음식점에 대한 리뷰 작성
 2. 리뷰 작성 시 해당 음식점 이름도 ReviewListData 컬렉션에 restaurantName 필드에 보내는 방법 생각하기
+ ㄴ resId의 경우 detail/[id]/page에서 getRestaurantData()에서 나온 데이터에서 음식점 id를 넘겨주기
 */
 import { collection, addDoc } from "firebase/firestore";
 import { ChungstaurantFirestore, serverTimestamp } from "@/firebase";
 
 /* 
-1. resName = 음식점 이름
+1. resId = 음식점 id
 2. id = 유저 닉네임(이름)
 3. starRate = 별점
 4. rContent = 리뷰 내용
 5. imgPath = 이미지(선택사항)
 6. timestamp = 작성시간
 */
-export default async function createReviewListData (resName: string, id: string, starRate: number, rContent: string, imgPath?: string)  {
+export default async function createReviewListData (resId: string, id: string, starRate: number, rContent: string, imgPath?: string)  {
     try{
         await addDoc(collection(ChungstaurantFirestore, 'ReviewListData'),
         {
-            restaurantName: resName,
+            restaurantId: resId,
             userId: id,
             starRate: starRate,
             rContent: rContent,

@@ -2,14 +2,14 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { ChungstaurantFirestore } from "@/firebase";
 
 // 해당 음식점에 대한 리뷰 목록 불러오기
-export default async function getReviewListData(resName: string) { // resName : 해당 음식점의 리뷰 목록을 불러오기위한 음식점 이름
+export default async function getReviewListData(resId: string) { // resId : 해당 음식점의 리뷰 목록을 불러오기위한 음식점 Id
   try {
     const reviewListDataCollectionRef = collection(ChungstaurantFirestore, 'ReviewListData');
 
     let reviewListDataQuery;
 
-    if (resName) {
-      reviewListDataQuery = query(reviewListDataCollectionRef, where('restaurantName', 'array-contains', resName));
+    if (resId) {
+      reviewListDataQuery = query(reviewListDataCollectionRef, where('restaurantName', 'array-contains', resId));
     } else {
       reviewListDataQuery = reviewListDataCollectionRef;
     }
