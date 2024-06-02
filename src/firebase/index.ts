@@ -23,5 +23,5 @@ const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 const auth = getAuth(firebaseApp);
 
-const ChungstaurantFirestore = getFirestore(firebaseApp);
-export { ChungstaurantFirestore, serverTimestamp, auth };
+export const ChungstaurantFirestore = getFirestore(firebaseApp);
+export { serverTimestamp, auth };
