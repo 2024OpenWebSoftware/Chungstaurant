@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore, serverTimestamp  } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,8 +20,19 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-const analytics = getAnalytics(firebaseApp);
 const auth = getAuth(firebaseApp);
+
+// Analytics 지원 여부 확인
+isSupported().then((supported) => {
+  if (supported) {
+    const analytics = getAnalytics(firebaseApp);
+    console.log("Firebase Analytics 초기화 완료.");
+  } else {
+    console.log("Firebase Analytics가 이 환경에서 지원되지 않습니다.");
+  }
+}).catch((error) => {
+  console.error("Firebase Analytics 지원 여부 확인 중 오류 발생:", error);
+});
 
 export const ChungstaurantFirestore = getFirestore(firebaseApp);
 export { serverTimestamp, auth };
