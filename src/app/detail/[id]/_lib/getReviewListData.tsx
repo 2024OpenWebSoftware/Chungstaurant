@@ -9,7 +9,7 @@ export default async function getReviewListData(resId: string) { // resId : í•´ë
     let reviewListDataQuery;
 
     if (resId) {
-      reviewListDataQuery = query(reviewListDataCollectionRef, where('restaurantName', 'array-contains', resId));
+      reviewListDataQuery = query(reviewListDataCollectionRef, where('restaurantId', '==', resId));
     } else {
       reviewListDataQuery = reviewListDataCollectionRef;
     }
