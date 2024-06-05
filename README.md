@@ -8,4 +8,5 @@ npm install --save firebase
 npm install --save react react-dom
 npm install classnames
 npm i react-kakao-maps-sdk
+npm install uuid
 ```
