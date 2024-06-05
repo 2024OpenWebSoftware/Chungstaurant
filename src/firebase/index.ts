@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore, serverTimestamp  } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,6 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
+const storage = getStorage(firebaseApp);
 
 // Analytics 지원 여부 확인
 isSupported().then((supported) => {
@@ -35,4 +37,4 @@ isSupported().then((supported) => {
 });
 
 export const ChungstaurantFirestore = getFirestore(firebaseApp);
-export { serverTimestamp, auth };
+export { serverTimestamp, auth, storage };
