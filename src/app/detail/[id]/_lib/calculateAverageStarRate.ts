@@ -2,7 +2,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { ChungstaurantFirestore } from "@/firebase";
 
 // 특정 음식점에 대한 리뷰 데이터의 starRate 평균을 계산
-async function calculateAverageStarRate(restaurantId: string) {
+export default async function calculateAverageStarRate(restaurantId: string) {
     const reviewCollection = collection(ChungstaurantFirestore, 'ReviewListData');
     const querySnapshot = await getDocs(reviewCollection);
 
