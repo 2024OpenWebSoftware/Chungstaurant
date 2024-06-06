@@ -8,25 +8,29 @@
     업로드할 파일 이름 중복 문제를 해결 할 수 있음.
 3. Next.js 컴포넌트에서 이미지 업로드 기능 구현 필요
 */
-import { v4 as uuid } from "uuid";					//v4 버전 사용
-import { ref, uploadBytes, } from "firebase/storage";
+import { v4 } from "uuid";					
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/firebase";
 
-export default async function uploadImage.ts(inputImage: File){
+export default async function uploadImage(inputImage: File) {
+    if (!inputImage) {
+        throw new Error('No image file provided');
+    }
 
-    const uploadFileName = uuid() + ".png";			// uuid를 통해 파일 이름 랜덤으로 뽑기
+    // 파일 확장자 추출
+    const fileExtension = inputImage.name.split('.').pop();
+    const uploadFileName = `${v4()}.${fileExtension}`; // uuid를 통해 파일 이름 랜덤으로 뽑기
 
-    if (inputImage === null) return;
-
-    const imageRef = ref(storage, `images/${uploadFileName}`);		// images 폴더에 저장
+    const imageRef = ref(storage, `images/${uploadFileName}`); // images 폴더에 저장
     
     try {
         const snapshot = await uploadBytes(imageRef, inputImage);
         console.log('Uploaded a blob or file!', snapshot);
         return snapshot;
-      } catch (error) {
+    } catch (error) {
         console.error('Error uploading image: ', error);
         throw error;
-      }
+    }
 }
+
     
