@@ -7,9 +7,12 @@
     저장할 파일 이름을 고유한 Key 값을 랜덤하게 만들어서 부여해주면 
     업로드할 파일 이름 중복 문제를 해결 할 수 있음.
 3. Next.js 컴포넌트에서 이미지 업로드 기능 구현 필요
+
+
+4. 이 함수는 Firebase Cloud Storage에 올린 이미지의 URL을 반환한다.
 */
 import { v4 } from "uuid";					
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/firebase";
 
 export default async function uploadImage(inputImage: File) {
@@ -25,9 +28,12 @@ export default async function uploadImage(inputImage: File) {
     
     try {
         const snapshot = await uploadBytes(imageRef, inputImage);
+        const downloadURL = await getDownloadURL(imageRef); // 이미지 다운로드 URL 가져오기
         console.log('Uploaded a blob or file!', snapshot);
-        return snapshot;
-    } catch (error) {
+
+        return downloadURL; // 다운로드 URL 반환
+    } 
+    catch (error) {
         console.error('Error uploading image: ', error);
         throw error;
     }
