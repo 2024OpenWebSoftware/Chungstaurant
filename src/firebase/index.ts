@@ -1,14 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-<<<<<<< HEAD
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore, serverTimestamp  } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from "firebase/storage";
-=======
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
->>>>>>> 6606095 (메인 화면 데이터 불러오기)
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -42,8 +37,4 @@ isSupported().then((supported) => {
 });
 
 export const ChungstaurantFirestore = getFirestore(firebaseApp);
-<<<<<<< HEAD
 export { serverTimestamp, auth, storage };
-=======
-export { auth };
->>>>>>> 6606095 (메인 화면 데이터 불러오기)
