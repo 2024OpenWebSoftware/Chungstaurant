@@ -1,6 +1,7 @@
 /* 
 1. 해당 음식점에 대한 리뷰 작성
 2. 리뷰 작성 시 해당 음식점 이름도 ReviewListData 컬렉션에 restaurantName 필드에 보내는 방법 생각하기
+<<<<<<< HEAD
  ㄴ resId의 경우 detail/[id]/page에서 getRestaurantData()에서 나온 데이터에서 음식점 id를 넘겨주기
 */
 import { collection, addDoc } from "firebase/firestore";
@@ -38,3 +39,6 @@ export default async function createReviewListData (resId: string, id: string, s
         console.error("Error adding review: ", error);
     }
 }
+=======
+*/
+>>>>>>> 6606095 (메인 화면 데이터 불러오기)

@@ -3,8 +3,13 @@
 import { useRouter } from 'next/navigation';
 import styles from "./restaurant.module.css";
 import StarRating from './StarRating';
+import { Restaurant as IRestaurant } from '@/model/Restaurant';
 
-export default function Restaurant() {
+type Props = {
+    restaurant: IRestaurant;
+}
+
+export default function Restaurant({ restaurant }: Props) {
     const router = useRouter();
 
     const onClickImage = () => {
@@ -13,18 +18,15 @@ export default function Restaurant() {
 
     return (
         <div className={styles.infoWrapper}>
-            <div className={styles.foodImage} onClick={onClickImage}>
+            <div className={styles.foodImage} style={{backgroundImage: `url(${restaurant.image})`}} onClick={onClickImage}>
                 <div className={styles.tags}>
-                    <div className={styles.tag}>
-                        #양식
-                    </div>
-                    <div className={styles.tag}>
-                        #중문
-                    </div>
+                    {restaurant.tagList.map((tag, i) => (
+                        <div key={i} className={styles.tag}>#{tag}</div>
+                    ))}
                 </div>
             </div>
-            <div className={styles.restaurantName}>쿠쉬</div>
-            <StarRating size="18px" />
+            <div className={styles.restaurantName}>{restaurant.restaurantName}</div>
+            <StarRating starAverage={restaurant.starAverage} size="18px" />
         </div>
     );
 }

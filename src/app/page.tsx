@@ -1,7 +1,21 @@
-import Restaurant from './_component/Restaurant';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 import styles from "./page.module.css";
+import getRestaurants from './_lib/getRestaurants';
+import Restaurants from './_component/Restaurants';
 
-export default function Home() {
+type Props = {
+  searchParams: { type?: string; search?: string; };
+};
+
+export default async function Home({ searchParams }: Props) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["restaurants", searchParams],
+    queryFn: getRestaurants,
+    initialPageParam: 0,
+  });
+  const dehydrateState = dehydrate(queryClient);
+
   return (
     <main className={styles.main}>
       <h1>우리 오늘 뭐 먹니?</h1>
@@ -17,13 +31,11 @@ export default function Home() {
         <button className={styles.foodType}>분식</button>
         <button className={styles.foodType}>기타</button>
       </div>
-      <div className={styles.restaurantWrapper}>
-        <Restaurant />
-        <Restaurant />
-        <Restaurant />
-        <Restaurant />
-        <Restaurant />
-      </div>
+      <HydrationBoundary state={dehydrateState}>
+        <div className={styles.restaurantWrapper}>
+          <Restaurants searchParams={searchParams} />
+        </div>
+      </HydrationBoundary>
     </main>
   );
 }
