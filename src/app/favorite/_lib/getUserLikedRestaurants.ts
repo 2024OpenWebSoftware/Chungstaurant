@@ -3,12 +3,12 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { ChungstaurantFirestore } from "@/firebase";
 
-export default async function getUserLikedRestaurants(useremail: string): Promise<string[]> {
+export default async function getUserLikedRestaurants(useremail: string): Promise<number[]> {
     const usersCollectionRef = collection(ChungstaurantFirestore, "Users");
     const userQuery = query(usersCollectionRef, where('email', '==', useremail));
     const querySnapshot = await getDocs(userQuery);
 
-    let likedRestaurants: string[] = [];
+    let likedRestaurants: number[] = [];
 
     querySnapshot.forEach((doc) => {
         const userData = doc.data();

@@ -6,9 +6,24 @@ import styles from "@/app/layout.module.css";
 import Logo from "../../../public/충스토랑.png";
 import HamburgerMenu from "./HamburgerMenu";
 import { useModalStore } from "@/store/modal";
+import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function NavBar() {
     const modalStore = useModalStore();
+    const router = useRouter();
+    const [searchValue, setSearchValue] = useState("");
+    const searchParams = useSearchParams();
+    const onChangeSearchInput: ChangeEventHandler<HTMLInputElement> = (e) => {
+        setSearchValue(e.target.value);
+    }
+    const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+        if(e.key === 'Enter') {
+            const newSearchParams = new URLSearchParams(searchParams);
+            newSearchParams.set("search", searchValue);
+            router.push(`/?${newSearchParams.toString()}`);
+        }
+    }
     const onClick = () => {
         modalStore.setVisible(true);
     };
@@ -21,7 +36,7 @@ export default function NavBar() {
                         <Image src={Logo} alt="충스토랑" width={120} />
                     </Link>
                     <div className={styles.searchForm}>
-                        <input type="text" className={styles.searchInput} />
+                        <input type="text" className={styles.searchInput} value={searchValue} onChange={onChangeSearchInput} onKeyDown={onKeyDown} />
                         <svg
                             fill="#000000"
                             height="18px"

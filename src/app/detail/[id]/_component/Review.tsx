@@ -10,7 +10,7 @@ export default function Review() {
                 <Image width={64} height={64} src={ProfileImage} alt="프로필사진" />
                 <div style={{display: "flex", flexDirection: "column"}}>
                     <div style={{fontWeight: "bold", marginBottom: "6px"}}>류정환</div>
-                    <StarRating size="18px" />
+                    <StarRating starAverage={0} size="18px" />
                 </div>
             </div>
             <div className={styles.review}>
