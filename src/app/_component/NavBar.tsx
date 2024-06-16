@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/app/layout.module.css";
-import Logo from "../../../public/충스토랑.png";
+import Logo from "../../../public/충스토랑.png";
 import HamburgerMenu from "./HamburgerMenu";
 import { useModalStore } from "@/store/modal";
 import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';

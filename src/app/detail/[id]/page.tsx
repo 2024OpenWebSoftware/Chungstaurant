@@ -2,7 +2,6 @@ import styles from "./page.module.css";
 import AiFillStar from "./_component/AiFillStar";
 import Review from './_component/Review';
 import RestaurantInfo from './_component/RestaurantInfo';
-import FavoriteList from '@/app/_component/FavoriteList';
 
 type Props = {
     params: { id: number };
