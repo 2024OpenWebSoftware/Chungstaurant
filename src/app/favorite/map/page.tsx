@@ -1,3 +1,5 @@
+import FavoriteList from './_component/FavoriteListMap';
+
 export default function FavoriteMapPage() {
-    return "좋아하는 식당 페이지(지도)";
+    return <FavoriteList />
 }

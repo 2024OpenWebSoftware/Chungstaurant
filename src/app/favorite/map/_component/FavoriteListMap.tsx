@@ -9,10 +9,12 @@ import {
     MarkerClusterer,
     CustomOverlayMap,
 } from "react-kakao-maps-sdk";
-import getUserLikedRestaurants from "../_lib/getUserLikedRestaurants";
-import { getCoordinatesFromAddress } from "../../_lib/transitionToCoordinates";
+import { getCoordinatesFromAddress } from "../../../_lib/transitionToCoordinates";
 import Script from "next/script";
-import getRestaurantDataNoReactQuery from '../_lib/getRestaurantDataNoReactQuery';
+import { useAuth } from "@/hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { Restaurant as IRestaurant } from "@/model/Restaurant";
+import getUserLikedRestaurants from "../../_lib/getUserLikedRestaurants";
 
 interface Place {
     lat: number;
@@ -21,11 +23,19 @@ interface Place {
     name: string; // 음식점 이름 필드 추가
 }
 
-interface FavoriteListProps {
-    useremail: string;
-}
-
-const FavoriteList: React.FC<FavoriteListProps> = ({ useremail }) => {
+const FavoriteList = () => {
+    const { user, loading } = useAuth();
+    const { data } = useQuery<
+        IRestaurant[],
+        Object,
+        IRestaurant[],
+        [_1: string, userEmail: string]
+    >({
+        queryKey: ["restaurants", user?.email as string],
+        queryFn: getUserLikedRestaurants,
+        staleTime: 60 * 1000,
+        gcTime: 300 * 1000,
+    });
     const [places, setPlaces] = useState<Place[]>([]);
     const [map, setMap] = useState<kakao.maps.Map | null>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -33,24 +43,9 @@ const FavoriteList: React.FC<FavoriteListProps> = ({ useremail }) => {
     useEffect(() => {
         const fetchLikedRestaurants = async () => {
             try {
-                // 유저의 좋아요한 음식점 ID 리스트 가져오기
-                const likedRestaurantIds = await getUserLikedRestaurants(
-                    useremail
-                );
-                console.log("Liked restaurant IDs:", likedRestaurantIds);
-
-                // 각 음식점 ID에 대한 데이터 가져오기
-                const restaurantDataPromises = likedRestaurantIds.map(id => getRestaurantDataNoReactQuery(id));
-
-                const restaurantDataArray = await Promise.all(
-                    restaurantDataPromises
-                );
-
-                console.log("Restaurant data:", restaurantDataArray);
-
-                // 음식점 주소를 위도/경도로 변환
-                const addressPromises = restaurantDataArray.map(
-                    (restaurantData) => {
+                if (data) {
+                    // 음식점 주소를 위도/경도로 변환
+                    const addressPromises = data?.map((restaurantData) => {
                         if (restaurantData && restaurantData.address) {
                             return getCoordinatesFromAddress(
                                 restaurantData.address
@@ -61,15 +56,15 @@ const FavoriteList: React.FC<FavoriteListProps> = ({ useremail }) => {
                             }));
                         }
                         return null;
-                    }
-                );
+                    });
 
-                const placesData = (await Promise.all(addressPromises)).filter(
-                    (place) => place !== null
-                );
+                    const placesData = (
+                        await Promise.all(addressPromises)
+                    ).filter((place) => place !== null);
 
-                setPlaces(placesData as Place[]);
-                console.log("Coordinates fetched:", placesData);
+                    setPlaces(placesData as Place[]);
+                    console.log("Coordinates fetched:", placesData);
+                }
             } catch (error) {
                 console.error("Error fetching liked restaurants:", error);
             }
@@ -78,7 +73,7 @@ const FavoriteList: React.FC<FavoriteListProps> = ({ useremail }) => {
         if (isMapLoaded) {
             fetchLikedRestaurants();
         }
-    }, [useremail, isMapLoaded]);
+    }, [data, isMapLoaded]);
 
     useEffect(() => {
         if (map && places.length) {
@@ -105,7 +100,7 @@ const FavoriteList: React.FC<FavoriteListProps> = ({ useremail }) => {
             />
             <Map
                 center={{ lat: 36.628503, lng: 127.456973 }}
-                style={{ width: "100%", height: "500px" }}
+                style={{ width: "100%", height: "900px" }}
                 level={4}
                 onCreate={handleMapCreate}
             >

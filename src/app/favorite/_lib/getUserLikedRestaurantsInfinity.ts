@@ -1,12 +1,13 @@
 import { collection, query, where, getDocs, limit, startAfter } from "firebase/firestore";
-import { ChungstaurantFirestore } from "../../../firebase";
-import { Restaurant } from "../../../model/Restaurant";
+import { ChungstaurantFirestore } from "@/firebase";
+import { Restaurant } from '@/model/Restaurant';
 
 type Props = {
     queryKey: [_1: string, userEmail: string]
+    pageParam?: number;
 }
 
-export default async function getUserLikedRestaurants({ queryKey }: Props) {
+export default async function getUserLikedRestaurantsInfinity({ queryKey, pageParam }: Props) {
     const [_1, userEmail] = queryKey;
 
     const usersCollectionRef = collection(ChungstaurantFirestore, "Users");
@@ -29,7 +30,11 @@ export default async function getUserLikedRestaurants({ queryKey }: Props) {
 
     const restaurantDataCollectionRef = collection(ChungstaurantFirestore, "RestaurantData");
 
-    restaurantQuery = query(restaurantDataCollectionRef, where('id', 'in', likedRestaurants));
+    if(pageParam) {
+        restaurantQuery = query(restaurantDataCollectionRef, where('id', 'in', likedRestaurants), startAfter(pageParam), limit(12));
+    } else {
+        restaurantQuery = query(restaurantDataCollectionRef, where('id', 'in', likedRestaurants), limit(12));
+    }
 
     const restaurantQuerySnapshot = await getDocs(restaurantQuery);
 

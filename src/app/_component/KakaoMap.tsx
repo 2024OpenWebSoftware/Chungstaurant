@@ -5,8 +5,6 @@ import { getCoordinatesFromAddress } from "../_lib/transitionToCoordinates";
 import { useEffect, useState } from "react";
 import Script from "next/script";
 
-const KAKAO_SDK_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_JS_KEY}&autoload=false`;
-
 type Props = {
     address: string;
 };
@@ -42,10 +40,7 @@ const KakaoMap = ({ address }: Props) => {
                     style={{ width: "500px", height: "300px" }}
                     onCreate={(map) => {
                         const marker = new kakao.maps.Marker({
-                            position: new kakao.maps.LatLng(
-                                0,
-                                0
-                            ),
+                            position: new kakao.maps.LatLng(0, 0),
                             map: map,
                         });
                     }}

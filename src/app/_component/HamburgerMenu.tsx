@@ -27,17 +27,27 @@ export default function HamburgerMenu() {
 
     return (
         <div className={styles.menuWrapper}>
-            <Link href="/" onClick={onClick}>홈</Link>
-            <Link href="/favorite" onClick={onClick}>내가 좋아하는 식당들</Link>
+            <Link href="/" onClick={onClick}>
+                홈
+            </Link>
             {!user ? (
                 <>
-                    <Link href="/login" onClick={onClick}>로그인</Link>
-                    <Link href="/signup" onClick={onClick}>회원가입</Link>
+                    <Link href="/login" onClick={onClick}>
+                        로그인
+                    </Link>
+                    <Link href="/signup" onClick={onClick}>
+                        회원가입
+                    </Link>
                 </>
             ) : (
-                <Link href="#" onClick={onClickLogout}>
-                    로그아웃
-                </Link>
+                <>
+                    <Link href="/favorite" onClick={onClick}>
+                        내가 좋아하는 식당들
+                    </Link>
+                    <Link href="#" onClick={onClickLogout}>
+                        로그아웃
+                    </Link>
+                </>
             )}
             <button className={styles.closeButton} onClick={onClick}>
                 <svg

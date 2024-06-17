@@ -1,5 +1,5 @@
-import Restaurant from "../_component/Restaurant";
 import styles from "../page.module.css";
+import FavoriteRestaurants from './_component/FavoriteRestaurants';
 import MapButton from './_component/MapButton';
 
 export default function FavoritePage() {
@@ -10,11 +10,7 @@ export default function FavoritePage() {
                 <MapButton />
             </div>
             <div className={styles.restaurantWrapper}>
-                <Restaurant />
-                <Restaurant />
-                <Restaurant />
-                <Restaurant />
-                <Restaurant />
+                <FavoriteRestaurants />
             </div>
         </main>
     );

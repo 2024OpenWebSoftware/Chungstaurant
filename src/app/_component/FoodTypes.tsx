@@ -32,6 +32,8 @@ export default function FoodTypes() {
             <button className={styles.foodType} onClick={onClickFoodType("중식")}>중식</button>
             <button className={styles.foodType} onClick={onClickFoodType("고기")}>고기</button>
             <button className={styles.foodType} onClick={onClickFoodType("분식")}>분식</button>
+            <button className={styles.foodType} onClick={onClickFoodType("카페")}>카페</button>
+            <button className={styles.foodType} onClick={onClickFoodType("치킨")}>치킨</button>
             <button className={styles.foodType} onClick={onClickFoodType("기타")}>기타</button>
         </div>
     );

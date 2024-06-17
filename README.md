@@ -10,4 +10,5 @@ npm install --save react react-dom
 npm install classnames
 npm install uuid
 npm i react-kakao-maps-sdk
+npm install firebase-admin
 ```
