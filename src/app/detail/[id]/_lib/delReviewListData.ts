@@ -7,13 +7,14 @@ import { ChungstaurantFirestore } from "@/firebase";
 */
 
 // 해당 음식점에 대한 리뷰 삭제하기
-export default async function delReviewListData(resId: string, userId: string) { 
+export default async function delReviewListData(reviewId: number, resId: number, userId: string) { 
   try {
     const reviewListDataCollectionRef = collection(ChungstaurantFirestore, 'ReviewListData');
 
-    // restaurantId와 userId가 일치하는 문서를 찾기 위한 쿼리 생성
+    // reviewId, restaurantId, userId가 일치하는 문서를 찾기 위한 쿼리 생성
     const reviewListDataQuery = query(
       reviewListDataCollectionRef,
+      where('reviewId', '==', reviewId),
       where('restaurantId', '==', resId),
       where('userId', '==', userId)
     );

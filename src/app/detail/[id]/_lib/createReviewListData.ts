@@ -15,7 +15,7 @@ import uploadImage from './uploadImage'; // 이미지 업로드 함수 가져오
 5. imgPath = 이미지(선택사항)
 6. timestamp = 작성시간
 */
-export default async function createReviewListData (resId: string, id: string, starRate: number, rContent: string, inputImage?: File)  {
+export default async function createReviewListData (reviewId: number, resId: number, id: string ,starRate: number, rContent: string, inputImage?: File)  {
     try{
         let inputimgPath = null;
 
@@ -25,6 +25,7 @@ export default async function createReviewListData (resId: string, id: string, s
 
         await addDoc(collection(ChungstaurantFirestore, 'ReviewListData'),
         {
+            reviewId: reviewId,
             restaurantId: resId,
             userId: id,
             starRate: starRate,
