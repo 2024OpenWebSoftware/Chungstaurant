@@ -34,6 +34,8 @@ export default async function createReviewListData (resId: number, email: string
         const userDoc = userquerySnapshot.docs[0];
         const userId = userDoc.data().id;
 
+        resId = Number(resId);
+
         await addDoc(collection(ChungstaurantFirestore, 'ReviewListData'),
         {
             reviewId: reviewId,
