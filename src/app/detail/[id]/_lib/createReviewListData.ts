@@ -34,7 +34,7 @@ export default async function createReviewListData (reviewId: number, resId: num
             timestamp: serverTimestamp() // Firestore의 서버 타임스탬프 사용
         })
         
-        console.log("Review successfully added!");
+        console.log("리뷰를 성공적으로 추가햐였습니다!");
     } catch(error){
         console.error("Error adding review: ", error);
     }
