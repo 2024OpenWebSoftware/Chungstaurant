@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, updateDoc } from "firebase/firestore";
 import { ChungstaurantFirestore } from "@/firebase";
 
 // 특정 음식점에 대한 리뷰 데이터의 starRate 평균을 계산
@@ -17,5 +17,17 @@ export default async function calculateAverageStarRate(restaurantId: number) {
         reviewCount += 1;
     });
 
-    return reviewCount === 0 ? 0 : totalStarRate / reviewCount;
+    const resultstaraver = reviewCount === 0 ? 0 : totalStarRate / reviewCount;
+
+    // 특정 restaurantId만 쿼리
+    const resCollection = collection(ChungstaurantFirestore, 'RestaurantData');
+    const resupdateQuery = query(resCollection, where("restaurantId", "==", restaurantId));
+    const resQuerySnapshot = await getDocs(resupdateQuery);
+
+    // 문서 업데이트
+    resQuerySnapshot.forEach(async (resDoc) => {
+        const resDocRef = doc(ChungstaurantFirestore, 'RestaurantData', resDoc.id);
+        await updateDoc(resDocRef, { starAverage: resultstaraver });
+    });
+
 }
