@@ -30,7 +30,7 @@ isSupported().then((supported) => {
     const analytics = getAnalytics(firebaseApp);
     console.log("Firebase Analytics 초기화 완료.");
   } else {
-    console.log("Firebase Analytics가 이 환경에서 지원되지 않습니다.");
+    //console.log("Firebase Analytics가 이 환경에서 지원되지 않습니다.");
   }
 }).catch((error) => {
   console.error("Firebase Analytics 지원 여부 확인 중 오류 발생:", error);

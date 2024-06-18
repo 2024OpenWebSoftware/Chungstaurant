@@ -4,13 +4,13 @@ import uploadImage from './uploadImage'; // 이미지 업로드 함수 가져오
 
 /* 
 1. resId = 음식점 id
-2. id = 유저 닉네임(이름)
+2. email = 유저 이메일
 3. starRate = 별점
 4. rContent = 리뷰 내용
 5. imgPath = 이미지(선택사항)
 6. timestamp = 작성시간
 */
-export default async function createReviewListData (resId: number, id: string ,starRate: number, rContent: string, inputImage?: File)  {
+export default async function createReviewListData (resId: number, email: string ,starRate: number, rContent: string, inputImage?: File)  {
     try{
         let inputimgPath = null;
 
@@ -23,11 +23,22 @@ export default async function createReviewListData (resId: number, id: string ,s
         const querySnapshot = await getDocs(reviewQuery);
         const reviewId = querySnapshot.size + 1; // 해당 resId에 대한 리뷰 수를 기반으로 reviewId 생성
 
+        // email을 기반으로 유저정보를 찾은뒤 id 필드값 갔고오기
+        const emailQuery = query(collection(ChungstaurantFirestore, 'Users'), where("email", "==", email));
+        const userquerySnapshot = await getDocs(emailQuery);
+        
+        if (userquerySnapshot.empty) {
+            throw new Error("해당 이메일을 가진 유저를 찾을 수 없습니다.");
+        }
+
+        const userDoc = userquerySnapshot.docs[0];
+        const userId = userDoc.data().id;
+
         await addDoc(collection(ChungstaurantFirestore, 'ReviewListData'),
         {
             reviewId: reviewId,
             restaurantId: resId,
-            userId: id,
+            userId: userId,
             starRate: starRate,
             rContent: rContent,
             imgPath: inputimgPath || null,  // imgPath가 선택 사항이므로, 제공되지 않으면 null로 설정
