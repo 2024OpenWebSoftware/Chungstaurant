@@ -8,7 +8,7 @@ type Props = {
 
 export default async function getUserLikedRestaurants({ queryKey }: Props) {
     const [_1, userEmail] = queryKey;
-
+ 
     const usersCollectionRef = collection(ChungstaurantFirestore, "Users");
     const userQuery = query(usersCollectionRef, where('email', '==', userEmail));
     const userQuerySnapshot = await getDocs(userQuery);

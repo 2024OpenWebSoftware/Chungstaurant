@@ -4,15 +4,25 @@ import Image from "next/image";
 import styles from "../page.module.css";
 import KakaoMap from "@/app/_component/KakaoMap";
 import StarRating from "@/app/_component/StarRating";
-import { useQuery } from '@tanstack/react-query';
-import getRestaurantData from '../_lib/getRestaurantData';
-import { Restaurant } from '@/model/Restaurant';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import getRestaurantData from "../_lib/getRestaurantData";
+import { Restaurant } from "@/model/Restaurant";
+import getUserLikedRestaurants from "@/app/favorite/_lib/getUserLikedRestaurants";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from 'react';
+import cx from "classnames";
+import postLikeRestaurantId from '../_lib/postLikeRestaurantId';
+import cancelLikeRes from '../_lib/cancelLikeRes';
+import { User } from 'firebase/auth';
 
 type Props = {
     id: number;
-}
+};
 
 export default function RestaurantInfo({ id }: Props) {
+    const queryClient = useQueryClient();
+    const { user, loading } = useAuth();
+    const [liked, setLiked] = useState(false);
     const { data, isFetching } = useQuery<
         Restaurant | null,
         Object,
@@ -24,8 +34,54 @@ export default function RestaurantInfo({ id }: Props) {
         staleTime: 60 * 1000,
         gcTime: 300 * 1000,
     });
+    
+    const { data: likedRestaurants } = useQuery<
+        Restaurant[],
+        Object,
+        Restaurant[],
+        [_1: string, userEmail: string]
+    >({
+        queryKey: ["restaurants", user?.email as string],
+        queryFn: getUserLikedRestaurants,
+        staleTime: 60 * 1000,
+        gcTime: 300 * 1000,
+    });
 
-    if(!isFetching) {
+    const like = useMutation({
+        mutationFn: ({ restaurantId, userEmail }: { restaurantId: number, userEmail: string }) => {
+            return postLikeRestaurantId(restaurantId, userEmail);
+        },
+        onSuccess() {
+            queryClient.invalidateQueries({queryKey: ["restaurants", user?.email as string]})
+        }
+    })
+
+    const unlike = useMutation({
+        mutationFn: ({ restaurantId, userEmail }: { restaurantId: number, userEmail: string }) => {
+            return cancelLikeRes(restaurantId, userEmail);
+        },
+        onSuccess() {
+            queryClient.invalidateQueries({queryKey: ["restaurants", user?.email as string]})
+        }
+    })
+
+    const onClick = () => {
+        if(!liked) {
+            setLiked(true);
+            like.mutate({restaurantId: data?.id as number, userEmail: user?.email as string});
+        } else {
+            setLiked(false);
+            unlike.mutate({restaurantId: data?.id as number, userEmail: user?.email as string});
+        }
+    }
+
+    useEffect(() => {
+        if (likedRestaurants && Array.isArray(likedRestaurants) && data) {
+            setLiked(likedRestaurants.some((restaurant) => restaurant.id === data.id));
+        }
+    }, [likedRestaurants, data]);
+
+    if (!isFetching) {
         return (
             <>
                 <div className={styles.restaurantInfo}>
@@ -44,10 +100,10 @@ export default function RestaurantInfo({ id }: Props) {
                             }}
                         >
                             <h1>{data?.restaurantName}</h1>
-                            <button className={styles.heartButton}>
+                            <button className={styles.heartButton} onClick={onClick}>
                                 <svg
                                     viewBox="0 0 24 24"
-                                    className={styles.heartButton}
+                                    className={cx(styles.heartButton, liked && styles.liked)}
                                     width={32}
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
@@ -57,11 +113,16 @@ export default function RestaurantInfo({ id }: Props) {
                         </div>
                         <div className={styles.foodTypes}>
                             {data?.tagList.map((tag, i) => (
-                                <button key={i} className={styles.foodType}>#{tag}</button>
+                                <button key={i} className={styles.foodType}>
+                                    #{tag}
+                                </button>
                             ))}
                         </div>
                         <div className={styles.ratingsInfo}>
-                            <StarRating starAverage={data?.starAverage as number} size="36px" />
+                            <StarRating
+                                starAverage={data?.starAverage as number}
+                                size="36px"
+                            />
                             <span style={{ marginLeft: "12px" }}>
                                 {data?.starAverage}/5
                             </span>
@@ -167,6 +228,6 @@ export default function RestaurantInfo({ id }: Props) {
                 <h2>위치 정보</h2>
                 <KakaoMap address={data?.address as string} />
             </>
-        )
+        );
     }
 }

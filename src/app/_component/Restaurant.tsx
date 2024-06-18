@@ -13,7 +13,7 @@ export default function Restaurant({ restaurant }: Props) {
     const router = useRouter();
 
     const onClickImage = () => {
-        router.push(`/detail/${restaurant.id}`);
+        window.location.href = `/detail/${restaurant.id}`;
     }
 
     return (

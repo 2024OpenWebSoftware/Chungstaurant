@@ -124,8 +124,9 @@ const FavoriteList = () => {
                                         style={{
                                             padding: "5px",
                                             backgroundColor: "white",
+                                            fontWeight: "bold",
                                             border: "1px solid black",
-                                            borderRadius: "3px",
+                                            borderRadius: "8px",
                                         }}
                                     >
                                         {place.name}

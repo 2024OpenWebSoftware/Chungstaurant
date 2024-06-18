@@ -90,6 +90,10 @@
     color: gray;
 }
 
+.stars .yellowStars {
+    color: gold;
+}
+
 .reviewInputWrapper {
     position: relative;
 }

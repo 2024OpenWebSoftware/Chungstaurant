@@ -13,7 +13,7 @@ Users 컬렉션
 import { collection, query, where, getDocs, updateDoc, arrayUnion } from "firebase/firestore";
 import { ChungstaurantFirestore } from "@/firebase";
 
-export default async function postLikeRestaurantId(resId: string, useremail: string){
+export default async function postLikeRestaurantId(resId: number, useremail: string){
     const usersCollectionRef = collection(ChungstaurantFirestore, "Users");
     
     // 유저의 이메일로 문서 쿼리
