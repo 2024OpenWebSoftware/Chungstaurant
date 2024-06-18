@@ -1,9 +1,4 @@
-/* 
-1. 해당 음식점에 대한 리뷰 작성
-2. 리뷰 작성 시 해당 음식점 이름도 ReviewListData 컬렉션에 restaurantName 필드에 보내는 방법 생각하기
- ㄴ resId의 경우 detail/[id]/page에서 getRestaurantData()에서 나온 데이터에서 음식점 id를 넘겨주기
-*/
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { ChungstaurantFirestore, serverTimestamp } from "@/firebase";
 import uploadImage from './uploadImage'; // 이미지 업로드 함수 가져오기
 
@@ -15,13 +10,18 @@ import uploadImage from './uploadImage'; // 이미지 업로드 함수 가져오
 5. imgPath = 이미지(선택사항)
 6. timestamp = 작성시간
 */
-export default async function createReviewListData (reviewId: number, resId: number, id: string ,starRate: number, rContent: string, inputImage?: File)  {
+export default async function createReviewListData (resId: number, id: string ,starRate: number, rContent: string, inputImage?: File)  {
     try{
         let inputimgPath = null;
 
         if (inputImage) {
             inputimgPath = await uploadImage(inputImage); // 이미지 업로드 후 다운로드 URL 받기
         }
+
+        // resId를 기반으로 고유한 reviewId 생성
+        const reviewQuery = query(collection(ChungstaurantFirestore, 'ReviewListData'), where("restaurantId", "==", resId));
+        const querySnapshot = await getDocs(reviewQuery);
+        const reviewId = querySnapshot.size + 1; // 해당 resId에 대한 리뷰 수를 기반으로 reviewId 생성
 
         await addDoc(collection(ChungstaurantFirestore, 'ReviewListData'),
         {
@@ -34,7 +34,7 @@ export default async function createReviewListData (reviewId: number, resId: num
             timestamp: serverTimestamp() // Firestore의 서버 타임스탬프 사용
         })
         
-        console.log("리뷰를 성공적으로 추가햐였습니다!");
+        console.log("리뷰를 성공적으로 추가했습니다!");
     } catch(error){
         console.error("Error adding review: ", error);
     }
