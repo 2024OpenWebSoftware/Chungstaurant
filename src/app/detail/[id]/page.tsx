@@ -1,8 +1,8 @@
 import styles from "./page.module.css";
-import Review from './_component/Review';
 import RestaurantInfo from './_component/RestaurantInfo';
 import ReviewRating from './_component/ReviewRating';
 import ReviewPostForm from './_component/ReviewPostForm';
+import Reviews from './_component/Reviews';
 
 type Props = {
     params: { id: number };
@@ -16,8 +16,8 @@ export default function DetailPage({ params }: Props) {
             <div className={styles.stars}>
                 <ReviewRating />
             </div>
-            <ReviewPostForm />
-            <Review />
+            <ReviewPostForm resId={params.id} />
+            <Reviews id={params.id} />
         </main>
     );
 }

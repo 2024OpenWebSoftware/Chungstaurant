@@ -151,3 +151,7 @@
 .uploadButton:hover {
     background-color: #8a8a8a;
 }
+
+.imageSection {
+    cursor: pointer;
+}
