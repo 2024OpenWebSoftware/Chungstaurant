@@ -1,6 +1,7 @@
 .reviewWrapper {
     width: 100%;
     display: flex;
+    position: relative;
     flex-direction: column;
     border-radius: 18px;
     border: 1px solid #999999;
@@ -27,4 +28,21 @@
 
 .imageSection img {
     object-fit: cover;
+}
+
+.deleteButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    background-color: #999999;
+    border: none;
+    border-radius: 18px;
+    color: white;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: #8a8a8a;
 }

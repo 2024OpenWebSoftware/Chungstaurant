@@ -124,7 +124,7 @@ export default function RestaurantInfo({ id }: Props) {
                                 size="36px"
                             />
                             <span style={{ marginLeft: "12px" }}>
-                                {data?.starAverage}/5
+                                {data?.starAverage}/5.0
                             </span>
                         </div>
                         <div className={styles.locInfo}>

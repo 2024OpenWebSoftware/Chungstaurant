@@ -22,13 +22,13 @@ export default async function calculateAverageStarRate(restaurantId: number) {
 
         // 특정 restaurantId만 쿼리
         const resCollection = collection(ChungstaurantFirestore, 'RestaurantData');
-        const resupdateQuery = query(resCollection, where("restaurantId", "==", restaurantId));
+        const resupdateQuery = query(resCollection, where("id", "==", restaurantId));
         const resQuerySnapshot = await getDocs(resupdateQuery);
 
         // 문서 업데이트
         const updatePromises = resQuerySnapshot.docs.map(async (resDoc) => {
             const resDocRef = doc(ChungstaurantFirestore, 'RestaurantData', resDoc.id);
-            await updateDoc(resDocRef, { starAverage: resultstaraver });
+            await updateDoc(resDocRef, { starAverage: resultstaraver.toFixed(1) });
         });
 
         await Promise.all(updatePromises);

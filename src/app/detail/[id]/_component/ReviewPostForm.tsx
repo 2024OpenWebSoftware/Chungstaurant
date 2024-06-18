@@ -5,12 +5,14 @@ import styles from "../page.module.css";
 import createReviewListData from '../_lib/createReviewListData';
 import { useAuth } from '@/hooks/useAuth';
 import { useModalStore } from '@/store/modal';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type Props = {
     resId: number;
 }
 
 export default function ReviewPostForm({ resId }: Props) {
+    const queryClient = useQueryClient();
     const { user, loading } = useAuth();
     const modalStore = useModalStore();
     const imageRef = useRef<HTMLInputElement>(null);
@@ -56,9 +58,20 @@ export default function ReviewPostForm({ resId }: Props) {
         if(starRate == 0) {
             alert("별점을 선택하셔야 됩니다.");
         } else {
-            createReviewListData(resId, user?.email as string, starRate, content, preview?.file);
+            setContent("");
+            setPreview(null);
+            modalStore.setClicked([false, false, false, false, false]);
+            reviewUpload.mutate({ resId: resId, email: user?.email as string, starRate: starRate, rContent: content, inputImage: preview?.file });
         }
     }
+    const reviewUpload = useMutation({
+        mutationFn: ({ resId, email, starRate, rContent, inputImage }: {resId: number, email: string, starRate: number, rContent: string, inputImage: File | undefined}) => {
+            return createReviewListData(resId, email, starRate, rContent, inputImage);
+        },
+        onSuccess() {
+            queryClient.invalidateQueries({queryKey: ["reviews", resId]})
+        }
+    });
 
     if(!user) {
         return null;
@@ -83,6 +96,7 @@ export default function ReviewPostForm({ resId }: Props) {
                 <textarea
                     className={styles.reviewTextArea}
                     rows={5}
+                    value={content}
                     placeholder="리뷰 내용을 입력해주세요."
                     onChange={onChange}
                 />

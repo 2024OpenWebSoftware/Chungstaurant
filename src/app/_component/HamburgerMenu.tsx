@@ -5,10 +5,8 @@ import styles from "./hamburgerMenu.module.css";
 import { useModalStore } from "@/store/modal";
 import { useAuth } from "@/hooks/useAuth";
 import { getAuth, signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
 
 export default function HamburgerMenu() {
-    const router = useRouter();
     const modalStore = useModalStore();
     const { user, loading } = useAuth();
     const auth = getAuth();
