@@ -9,7 +9,7 @@ export default function Document() {
           dangerouslySetInnerHTML={{
             __html: `
               var script = document.createElement('script');
-              script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_JS_KEY}&libraries=services&autoload=false';
+              script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_JS_KEY}&autoload=false';
               document.body.appendChild(script);
             `,
           }}
