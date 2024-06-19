@@ -12,8 +12,8 @@ export default function RootLayout({
             <html lang="en">
                 <body style={{ margin: 0, display: "flex", justifyContent: "center" }}>
                     <RQProvider>
-                        <NavBar />
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense>
+                            <NavBar />
                             {children}
                         </Suspense>
                     </RQProvider>
