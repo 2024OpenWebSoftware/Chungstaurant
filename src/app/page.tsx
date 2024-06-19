@@ -1,5 +1,6 @@
 import {
     HydrationBoundary,
+    InfiniteData,
     QueryClient,
     dehydrate,
 } from "@tanstack/react-query";
@@ -7,6 +8,7 @@ import styles from "./page.module.css";
 import getRestaurants from "./_lib/getRestaurants";
 import Restaurants from "./_component/Restaurants";
 import FoodTypes from "./_component/FoodTypes";
+import { Restaurant } from '@/model/Restaurant';
 
 type Props = {
     searchParams: { type?: string; search?: string };
@@ -14,7 +16,7 @@ type Props = {
 
 export default async function Home({ searchParams }: Props) {
     const queryClient = new QueryClient();
-    await queryClient.prefetchInfiniteQuery({
+    await queryClient.prefetchInfiniteQuery<Restaurant[], Object, InfiniteData<Restaurant[]>, [_1: string, _2: Props["searchParams"]], number>({
         queryKey: ["restaurants", searchParams],
         queryFn: getRestaurants,
         initialPageParam: 0,
